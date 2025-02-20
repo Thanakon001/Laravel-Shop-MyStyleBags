@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <p class="card-text">{{$product->pro_name}}</p>
                         <p class="card-text truncate">{{$product->pro_details}}</p>
-                        <a href="/product/details/1" class="btn btn-info text-white">รายละเอียด</a>
+                        <a href="{{route('shop.details', $product->pro_bacode)}}" class="btn btn-info text-white">รายละเอียด</a>
                     </div>
                 </div>
             @endforeach
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <p class="card-text">{{$product->pro_name}}</p>
                         <p class="card-text truncate">{{$product->pro_details}}</p>
-                        <a href="/product/details/1" class="btn btn-info text-white">รายละเอียด</a>
+                        <a href="{{route('shop.details', $product->pro_bacode)}}" class="btn btn-info text-white">รายละเอียด</a>
                     </div>
                 </div>
             @endforeach

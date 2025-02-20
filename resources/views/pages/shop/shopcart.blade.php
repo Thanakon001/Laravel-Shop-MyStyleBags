@@ -28,9 +28,9 @@
                             <td>{{ $item['pro_name'] }}</td>
                             <td>฿{{ number_format($item['pro_price'], 2) }}</td>
                             <td>
-                                <form action="{{ route('shop.cart.add', $id) }}" method="POST" class="input-group">
+                                <form action="{{ route('shop.cart.update', $id) }}" method="POST" class="input-group">
                                     @csrf
-                                    <input type="number" name="quantity" class="form-control" value="{{ $item['list_quentity'] }}" min="1" />
+                                    <input type="number" name="list_quentity" class="form-control" value="{{ $item['list_quentity'] }}" min="1" />
                                     <button type="submit" class="btn btn-primary btn-sm text-white">อัปเดต</button>
                                 </form>
                             </td>

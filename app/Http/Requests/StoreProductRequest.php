@@ -33,6 +33,13 @@ class StoreProductRequest extends FormRequest
 
     public function messages(): array
     {
-        return [];
+        return [
+            "pro_name" => 'กรุณากรอกชื่อสินค้า',
+            "band_id" => 'กรุณาเลือกยี่ห้อ',
+            "pro_details" => 'กรุณากรอกรายละเอียดสินค้า',
+            "pro_image" => 'กรุณาเลือกรูปภาพ',
+            "pro_price" => 'กรุณากรอกราคาสินค้า',
+            "pro_stock" => 'กรุณากรอกจำนวนสินค้า',
+        ];
     }
 }

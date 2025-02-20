@@ -6,7 +6,7 @@
 <p>ข้อมูลผู้ใช้งานทั้งหมด</p>
 <div class="row bg-white py-2 rounded-1 shadow-sm">
     <p class="fs-6">จัดการข้อมูลผู้ใช้งาน</p>
-    <table class="table" id="table-product-main">
+    <table class="table table-hover" id="table-product-main">
         <thead>
             <tr>
                 <th>ลำดับ</th>

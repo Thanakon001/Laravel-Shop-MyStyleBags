@@ -33,7 +33,7 @@
 </div>
 <div class="row bg-white py-3 px-0 rounded-1 shadow-sm">
     <p class="fs-6">รายการสินค้าสั่งซื้อล่าสุด</p>
-    <table class="table" id="table-order-main">
+    <table class="table table-hover" id="table-order-main">
         <thead>
             <tr>
                 <th>ลำดับ</th>

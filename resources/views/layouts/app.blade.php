@@ -17,7 +17,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
         body {
-            background-image: url('/vecteezy_orange-school-backpack_27248082.jpg');
+            background-image: url('vendor/vecteezy_orange-school-backpack_27248082.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

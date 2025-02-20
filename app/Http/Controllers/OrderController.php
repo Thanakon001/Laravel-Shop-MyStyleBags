@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\sendOrderMail;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -9,6 +10,7 @@ use App\Models\OrderList;
 use App\Models\Product;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
@@ -38,7 +40,6 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             $cart = Session::get('cart', []);
-            // ตรวจสอบสต็อกก่อน
             foreach ($cart as $order_detail => $item) {
                 $product = Product::findOrFail($item['pro_bacode']);
                 if (!$product) {
@@ -47,14 +48,13 @@ class OrderController extends Controller
                 }
 
                 if ($product->pro_stock < $item['list_quentity']) {
-                    Alert::error('เกิดข้อผิดพลาด', 'จำนวนสินค้าไม่เพียงพอ\nรหัสสินค้า: ' . $product->pro_bacode . '\n');
+                    Alert::error('เกิดข้อผิดพลาด', 'จำนวนสินค้าไม่เพียงพอ ' . $product->pro_name.' จำนวนคงเหลือ '.$product->pro_stock);
                     return redirect()->back();
                 }
             }
 
-            // สร้างคำสั่งซื้อ
             $order = Order::create([
-                "id" => Auth::user()->id,
+                "id" => auth()->user()->id,
                 'order_name' => $request->order_name,
                 'order_address' => $request->order_address,
                 'order_phone' => $request->order_phone,
@@ -63,8 +63,6 @@ class OrderController extends Controller
             ]);
 
             $totalAmount = 0;
-
-            // สร้างรายละเอียดคำสั่งซื้อ
             foreach ($cart as $order_detail => $item) {
                 $price = $item['pro_price'] * $item['list_quentity'];
                 OrderList::create([
@@ -76,17 +74,14 @@ class OrderController extends Controller
                 ]);
 
                 $totalAmount += $price;
-
-                // อัปเดตสต็อกสินค้า
                 $product = Product::findOrFail($item['pro_bacode']);
                 $product->decrement('pro_stock', $item['list_quentity']);
             }
 
-            // อัปเดตยอดรวมคำสั่งซื้อ
             $order->update(['order_total' => $totalAmount]);
-
             DB::commit();
 
+            Mail::to(auth()->user()->email)->queue(new SendOrderMail($order));
             Alert::success('ยืนยันการชำระ', 'คำสั่งซื้อของท่านสำเร็จ');
             Session::forget('cart');
             return to_route('shop.cart');
@@ -131,9 +126,9 @@ class OrderController extends Controller
             $order->order_status = $request->order_status;
             $order->order_details = $request->order_details;
             $request->order_status === "Success" ? $order->order_tracking = $request->order_tracking : $order->order_tracking = "ไม่มี";
-
             $order->save();
             DB::commit();
+
             Alert::success('ทำรายการสำเร็จ', $id);
             return redirect()->back();
         } catch (\Throwable $th) {

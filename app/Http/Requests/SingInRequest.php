@@ -27,4 +27,16 @@ class SingInRequest extends FormRequest
                 "password" => "required|string|min:6"
             ];
     }
+
+    public function messages(){
+        return [
+            "email.required" => "กรุณากรอก Email",
+            "email.email" => "Email ไม่ถูกต้อง",
+            "email.string" => "Email ต้องเป็นข้อความ",
+            "email.max" => "Email ต้องมีความยาวไม่เกิน 255 ตัวอักษร",
+            "password.required" => "กรุณากรอก Password",
+            "password.string" => "Password ต้องเป็นข้อความ",
+            "password.min" => "Password ต้องมีความยาวอย่างน้อย 6 ตัวอักษร"
+        ];
+    }
 }

@@ -27,4 +27,15 @@ class StoreRatingRequest extends FormRequest
             'pro_bacode' => ['required', 'string'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'rating_point.required' => 'กรุณาให้คะแนนสินค้า',
+            'rating_point.integer' => 'คะแนนต้องเป็นตัวเลขเท่านั้น',
+            'rating_point.min' => 'คะแนนต้องมากกว่าหรือเท่ากับ 1',
+            'rating_point.max' => 'คะแนนต้องน้อยกว่าหรือเท่ากับ 5',
+            'pro_bacode.required' => 'กรุณากรอกรหัสสินค้า',
+        ];
+    }
 }

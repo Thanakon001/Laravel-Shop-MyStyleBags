@@ -29,4 +29,15 @@ class UpdateProductRequest extends FormRequest
             "pro_stock" => "required",
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            "pro_name.required" => "กรุณากรอกชื่อสินค้า",
+            "band_id.required" => "กรุณาเลือกยี่ห้อสินค้า",
+            "pro_details.required" => "กรุณากรอกรายละเอียดสินค้า",
+            "pro_price.required" => "กรุณากรอกราคาสินค้า",
+            "pro_stock.required" => "กรุณากรอกจำนวนสินค้า",
+        ];
+    }
 }

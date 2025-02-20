@@ -13,7 +13,7 @@
 <p>ข้อมูลประเภทสินค้า</p>
 <div class="row bg-white py-2 rounded-1 shadow-sm">
     <p class="fs-6">จัดการข้อมูลประเภทสินค้า</p>
-    <table class="table" id="table-product-main">
+    <table class="table table-hover" id="table-product-main">
         <thead>
             <tr>
                 <th>ลำดับ</th>

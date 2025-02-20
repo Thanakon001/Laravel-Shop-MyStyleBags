@@ -48,4 +48,20 @@ class CartController extends Controller
         }
         return back();
     }
+
+    public function updateItem(Request $request, $id)
+    {
+        $cart = Session::get('cart', []);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['list_quentity'] = $request->list_quentity;
+            Session::put('cart', $cart);
+            Alert::success('ตะกร้าสินค้า', 'อัปเดตจำนวนสินค้าเรียบร้อยแล้ว');
+        } else {
+            Alert::error('ตะกร้าสินค้า', 'ไม่พบสินค้าที่ต้องการอัปเดต');
+        }
+
+        return back();
+    }
+
 }

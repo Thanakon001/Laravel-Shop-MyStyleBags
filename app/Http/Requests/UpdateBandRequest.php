@@ -25,4 +25,11 @@ class UpdateBandRequest extends FormRequest
             "band_name" => "required"
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            "band_name.required" => "กรุณากรอกชื่อหมวดหมู่"
+        ];
+    }
 }

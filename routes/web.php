@@ -3,12 +3,14 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BandController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PromptPayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
+Route::get('login/google', [GoogleController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('api/login/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+// Route::get('/promptpay/{amount}', [PromptPayController::class, 'generateQr']);
 
 Route::middleware(['auth', 'admin', 'throttle:20,1'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -51,11 +56,13 @@ Route::middleware(['auth', 'admin', 'throttle:20,1'])->group(function () {
     Route::put('/order/perpare/{id}', [OrderController::class, 'store_perpare'])->name('order.perpare.store');
 });
 
-Route::middleware(['auth', 'throttle:20,1'])->group(function () {
+Route::middleware(['auth', 'throttle:200,1'])->group(function () {
+
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.admin');
     Route::post('/profile', [HomeController::class, 'updateprofile'])->name('profile.user.update');
     Route::get('/shop/payments', [ShopController::class, 'payments'])->name('shop.payments');
     Route::post('/shop/cart/add/{id}', [CartController::class, 'addItem'])->name('shop.cart.add');
+    Route::post('/cart/update/{id}', [CartController::class, 'updateItem'])->name('shop.cart.update');
     Route::delete('/shop/cart/remove/{id}', [CartController::class, 'removeItem'])->name('shop.cart.remove');
     Route::post('/shop/order', [OrderController::class, 'store'])->name('shop.order.store');
     Route::get('/shop/order/history', [ShopController::class, 'history'])->name('shop.order.history');
@@ -73,9 +80,14 @@ Route::middleware(['throttle:20,1'])->group(function () {
     Route::get('/shop/about', [ShopController::class, 'about'])->name('shop.about');
     Route::get('/shop/contact', [ShopController::class, 'contact'])->name('shop.contact');
     Route::get('/shop/cart', [ShopController::class, 'cart'])->name('shop.cart');
-
 });
 
 Route::get('/', function () {
     return redirect()->route('shop.index');
 });
+
+Route::get('/test', function () {
+    $order = App\Models\Order::with('orderList.product')->find('T2025022000001');
+    return view('mail.orderMail', compact('order'));
+});
+

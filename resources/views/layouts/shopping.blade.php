@@ -46,7 +46,7 @@
                 <a href="{{route('shop.order.history')}}" class="text-dark">ประวัติคำสั่งซื้อ</a>
             @endif
             <a href="{{route('shop.about')}}" class="text-dark">เกี่ยวกับเรา</a>
-            <a href="{{route('shop.contact')}}" class="text-dark">ติดต่อ</a>
+            <!-- <a href="{{route('shop.contact')}}" class="text-dark">ติดต่อ</a> -->
         </div>
 
         <div class="justify-content-end d-flex align-items-center gap-3 col-4 px-4">

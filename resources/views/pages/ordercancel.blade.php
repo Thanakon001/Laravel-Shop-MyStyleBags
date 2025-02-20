@@ -4,7 +4,7 @@
 <p>รายการออเดอร์สั่งสินค้าทั้งหมด</p>
 <div class="row bg-white py-2 rounded-1 shadow-sm">
     <p class="fs-5">จัดการข้อมูลออเดอร์สั่งสินค้า <span class="badge bg-danger">ยกเลิกแล้ว</span></p>
-    <table class="table" id="table-cancel-main">
+    <table class="table table-hover" id="table-cancel-main">
         <thead>
             <tr>
                 <th>ลำดับ</th>
